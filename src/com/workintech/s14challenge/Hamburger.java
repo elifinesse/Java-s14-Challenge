@@ -1,29 +1,26 @@
 package com.workintech.s14challenge;
 
-public class Hamburger {
+import java.util.Arrays;
+
+public class Hamburger implements Addable{
     private String name;
     private String meat;
     private double price;
     private BreadRollType breadRollType;
-    private String addition1Name;
-    private double addition1Price;
-    private String addition2Name;
-    private double addition2Price;
-    private String addition3Name;
-    private double addition3Price;
-    private String addition4Name;
-    private double addition4Price;
+    private Addition[] additions;
 
     public Hamburger(String name, String meat, BreadRollType breadRollType) {
         this.name = name;
         this.meat = meat;
         this.breadRollType = breadRollType;
+        this.additions = new Addition[4];
     }
     public Hamburger(String name, String meat, double price, BreadRollType breadRollType) {
         this.name = name;
         this.meat = meat;
         this.price = price;
         this.breadRollType = breadRollType;
+        this.additions = new Addition[4];
     }
 
     public String getName() {
@@ -42,25 +39,50 @@ public class Hamburger {
         return breadRollType;
     }
 
-    public void addHamburgerAddition1(String addition1Name, double addition1Price){
-        this.addition1Name = addition1Name;
-        this.addition1Price = addition1Price;
+    public void setName(String name) {
+        this.name = name;
     }
-    public void addHamburgerAddition2(String addition2Name, double addition2Price){
-        this.addition2Name = addition2Name;
-        this.addition2Price = addition2Price;
+
+    public void setMeat(String meat) {
+        this.meat = meat;
     }
-    public void addHamburgerAddition3(String addition3Name, double addition3Price){
-        this.addition3Name = addition3Name;
-        this.addition3Price = addition3Price;
+
+    public void setPrice(double price) {
+        this.price = price;
     }
-    public void addHamburgerAddition4(String addition4Name, double addition4Price){
-        this.addition4Name = addition4Name;
-        this.addition4Price = addition4Price;
+
+    public void setBreadRollType(BreadRollType breadRollType) {
+        this.breadRollType = breadRollType;
+    }
+
+    public void setAdditions(Addition[] additions) {
+        this.additions = additions;
+    }
+
+    public void addHamburgerAddition(String name, double price){
+        for(int i = 0; i < additions.length; i++){
+            if(additions[i] == null){
+                additions[i] = new Addition(name, price);
+                break;
+            }
+        }
     }
     public double itemizeHamburger(){
-        System.out.println(this);
-        return price + addition1Price + addition2Price + addition3Price + addition4Price;
+        StringBuilder builder = new StringBuilder();
+        builder.append("Name: " + name + "\n");
+        builder.append("Meat: " + meat + "\n");
+        builder.append("BreadRollType: " + breadRollType.name() + "\n");
+
+        for(int i = 0; i < additions.length; i++){
+            if(additions[i] != null){
+                builder.append("Addition" + (i+1) + ": "+ additions[i].getName() + "\n");
+                setPrice(price + additions[i].getPrice());
+            }
+        }
+        builder.append("Total price: " + price);
+        System.out.println(builder);
+
+        return price;
     }
 
     @Override
@@ -70,14 +92,7 @@ public class Hamburger {
                 ", meat='" + meat + '\'' +
                 ", price=" + price +
                 ", breadRollType=" + breadRollType +
-                ", addition1Name='" + addition1Name + '\'' +
-                ", addition1Price=" + addition1Price +
-                ", addition2Name='" + addition2Name + '\'' +
-                ", addition2Price=" + addition2Price +
-                ", addition3Name='" + addition3Name + '\'' +
-                ", addition3Price=" + addition3Price +
-                ", addition4Name='" + addition4Name + '\'' +
-                ", addition4Price=" + addition4Price +
+                ", additions=" + Arrays.toString(additions) +
                 '}';
     }
 }

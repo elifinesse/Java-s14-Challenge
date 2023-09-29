@@ -5,36 +5,23 @@ public class DeluxeBurger extends Hamburger{
     private boolean hasDrink;
     private double price;
 
-    public DeluxeBurger(String name, String meat, BreadRollType breadRollType) {
-        super(name, meat, breadRollType);
+    public DeluxeBurger() {
+        super("Deluxe Burger", "Deluxe Meat", 19.10, BreadRollType.SESAME_BUN);
         this.hasChips = true;
         this.hasDrink = true;
-        this.price = 19.10;
     }
 
     @Override
-    public void addHamburgerAddition1(String addition1Name, double addition1Price) {
-        System.out.println("Extra toppings can't be added to this burger");
-    }
-
-    @Override
-    public void addHamburgerAddition2(String addition2Name, double addition2Price) {
-        System.out.println("Extra toppings can't be added to this burger");
-    }
-
-    @Override
-    public void addHamburgerAddition3(String addition3Name, double addition3Price) {
-        System.out.println("Extra toppings can't be added to this burger");
-    }
-
-    @Override
-    public void addHamburgerAddition4(String addition4Name, double addition4Price) {
-        System.out.println("Extra toppings can't be added to this burger");
+    public void addHamburgerAddition(String name, double price) {
+        System.out.println("You can't add extras to Deluxe Burger.");
     }
 
     @Override
     public double itemizeHamburger() {
-        System.out.println(this);
+        String extras = "Chips: " + hasChips + "\n"
+                        + "Drink: " + hasDrink + "\n";
+        System.out.print(extras);
+        super.itemizeHamburger();
         return this.price;
     }
 

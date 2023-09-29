@@ -1,39 +1,44 @@
 package com.workintech.s14challenge;
 
-public class HealthyBurger extends Hamburger{
-    private String healthyExtra1Name;
-    private double healthyExtra1Price;
-    private String healthyExtra2Name;
-    private double healthyExtra2Price;
+import java.util.Arrays;
 
-    public HealthyBurger(String name, String meat, double price, BreadRollType breadRollType) {
-        super(name, meat, price, breadRollType);
+public class HealthyBurger extends Hamburger implements HealthyAddable{
+
+    private Addition[] healthyExtras;
+
+    public HealthyBurger(String name, double price, BreadRollType breadRollType) {
+        super(name, "Tofu", price, breadRollType);
+        this.healthyExtras = new Addition[2];
     }
 
-    public void addHealthyAddition1(String healthyExtra1Name, double healthyExtra1Price){
-        this.healthyExtra1Name = healthyExtra1Name;
-        this.healthyExtra1Price = healthyExtra1Price;
-
-    }
-
-    public void addHealthyAddition2(String healthyExtra2Name, double healthyExtra2Price){
-        this.healthyExtra2Name = healthyExtra2Name;
-        this.healthyExtra2Price = healthyExtra2Price;
+    @Override
+    public void addHealthyAddition(String name, double price) {
+        for(int i = 0; i < healthyExtras.length; i++){
+            if(healthyExtras[i] == null){
+                healthyExtras[i] = new Addition(name, price);
+                break;
+            }
+        }
     }
 
     @Override
     public double itemizeHamburger() {
-        System.out.println(this);
-        return super.itemizeHamburger() + healthyExtra1Price + healthyExtra2Price;
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i < healthyExtras.length; i++){
+            if(healthyExtras[i] != null){
+                builder.append("HealthyAddition" + (i + 1) + ": " + healthyExtras[i].getName() + "\n");
+                setPrice(getPrice() + healthyExtras[i].getPrice());
+            }
+        }
+        System.out.print(builder);
+        super.itemizeHamburger();
+        return getPrice();
     }
 
     @Override
     public String toString() {
-        return super.toString() + " HealthyBurger{" +
-                "healthyExtra1Name='" + healthyExtra1Name + '\'' +
-                ", HealthyExtra1Price=" + healthyExtra1Price +
-                ", healthyExtra2Name='" + healthyExtra2Name + '\'' +
-                ", HealthyExtra2Price=" + healthyExtra2Price +
+        return "HealthyBurger{" +
+                "healthyExtras=" + Arrays.toString(healthyExtras) +
                 '}';
     }
 }
