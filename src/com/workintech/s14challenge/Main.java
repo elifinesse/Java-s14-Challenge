@@ -29,5 +29,6 @@ public class Main {
         db.addHamburgerAddition("Should not do this", 50.53);
 
         db.itemizeHamburger();
+
     }
 }
